@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DefaultStyle_TextView_Normal">
+        <item name="android:textSize">23sp</item>
+    </style>
+
+
+    <style name="DefaultStyle_TextView_Bold" parent="DefaultStyle_TextView_Normal">
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

@@ -1,7 +1,5 @@
-package com.br.apimercadolivre.models.models
+package com.br.apimercadolivre.searchproducts.models.models
 
-import com.br.apimercadolivre.models.models.MetadataPagingSearch
-import com.br.apimercadolivre.models.models.Product
 import com.google.gson.annotations.SerializedName
 
 data class ResultSearchProduct(

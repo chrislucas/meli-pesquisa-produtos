@@ -1,4 +1,4 @@
-package com.br.apimercadolivre.models.models
+package com.br.apimercadolivre.searchproducts.models.models
 
 import com.google.gson.annotations.SerializedName
 

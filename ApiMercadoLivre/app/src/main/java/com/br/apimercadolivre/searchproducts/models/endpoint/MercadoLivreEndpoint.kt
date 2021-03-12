@@ -1,6 +1,6 @@
-package com.br.apimercadolivre.models.endpoint
+package com.br.apimercadolivre.searchproducts.models.endpoint
 
-import com.br.apimercadolivre.models.models.ResultSearchProduct
+import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

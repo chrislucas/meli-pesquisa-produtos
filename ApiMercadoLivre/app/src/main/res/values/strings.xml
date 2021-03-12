@@ -1,3 +1,6 @@
 <resources>
-  <string name="app_name">ApiMercadoLivre</string>
+    <string name="app_name">ApiMercadoLivre</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_text_empty_state">Desculpe-nos. Ocorreu um erro mas já estamos prontamento atuando na solução.</string>
 </resources>
