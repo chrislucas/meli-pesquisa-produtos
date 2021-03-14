@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.br.apimercadolivre.R
+import com.br.apimercadolivre.searchproducts.viewmodels.SearchViewModel
 
-class SearchFragment : Fragment() {
+class SearchFragment private constructor(): Fragment() {
 
     companion object {
         fun newInstance() = SearchFragment()
