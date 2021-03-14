@@ -8,6 +8,7 @@ data class Product(
     @SerializedName("seller") val seller: SellerProduct,
     @SerializedName("price") private val mPrice: Int,
     @SerializedName("available_quantity") private val availableQuantity: Int,
+    @SerializedName("thumbnail")  val urlThumbnail: String
 ) {
     val price: Double
         get() = mPrice * 1.0

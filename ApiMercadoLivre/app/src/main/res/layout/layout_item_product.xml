@@ -1,40 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/cv_root_item_product_list"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     style="@style/DefaultStyle_CardView_LayoutResultSearch"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/label_product_name"
+
+        <ImageView
+            android:id="@+id/img_view_img_product"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/txt_label_product_name"
-            tools:text="Nome: Samsung Galaxy s21"
-            style="@style/DefaultStyle_TextView_Small_Normal"
+
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            tools:src="@drawable/ic_launcher_background"
             />
+
+        <TextView
+            android:id="@+id/tv_label_product_name"
+            style="@style/DefaultStyle_TextView_Small_Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginStart="4sp"
+            android:text="@string/txt_label_product_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_view_img_product"
+            app:layout_constraintTop_toTopOf="@+id/img_view_img_product"
+            tools:text="Nome: Samsung Galaxy s21" />
 
 
         <TextView
-            android:id="@+id/label_product_price"
+            android:id="@+id/tv_label_product_price"
+            style="@style/DefaultStyle_TextView_Small_Normal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/label_product_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginStart="4sp"
             android:text="@string/txt_label_product_price"
-            tools:text="Preço: R$ 20,00"
-            style="@style/DefaultStyle_TextView_Small_Normal"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_view_img_product"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_product_name"
+            tools:text="Preço: R$ 20,00" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
