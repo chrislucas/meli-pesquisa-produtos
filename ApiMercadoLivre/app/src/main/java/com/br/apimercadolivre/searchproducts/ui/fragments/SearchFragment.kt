@@ -22,6 +22,7 @@ import com.br.apimercadolivre.searchproducts.ui.list.action.InteractiveItemViewH
 import com.br.apimercadolivre.searchproducts.ui.list.adapter.GenericAdapterRecyclerView
 import com.br.apimercadolivre.searchproducts.viewmodels.SearchViewModel
 import com.br.apimercadolivre.searchproducts.viewmodels.closeKeyboard
+import com.br.apimercadolivre.searchproducts.viewmodels.showDialogErrorMessage
 import timber.log.Timber
 
 class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
@@ -30,6 +31,7 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
         fun newInstance() = SearchFragment()
 
         const val PRODUCTS_BUNDLE_KEY = "PRODUCTS_BUNDLE_KEY"
+        private const val TAG = "SEARCH_FRAGMENT"
     }
 
     private lateinit var viewModel: SearchViewModel
@@ -63,10 +65,20 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
             when (state) {
                 is BridgeViewViewModelState.OnSuccess<*> -> {
                     val data = state.value as ResultSearchProduct
-                    adapterRecyclerView.updateCollection(data.products.toMutableList())
+                    if (data.products.isNotEmpty()) {
+                        adapterRecyclerView.updateCollection(data.products.toMutableList())
+                    } else {
+                        activity?.showDialogErrorMessage(
+                            TAG,
+                            resources.getString(R.string.text_warning_user_empty_product_list)
+                        )
+                    }
                 }
                 is BridgeViewViewModelState.OnError -> {
-                    // DO
+                    activity?.showDialogErrorMessage(
+                        TAG,
+                        resources.getString(R.string.text_warning_user_error_after_search_product)
+                    )
                 }
             }
         }
