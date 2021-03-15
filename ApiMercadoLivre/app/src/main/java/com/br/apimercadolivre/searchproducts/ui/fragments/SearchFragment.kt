@@ -3,6 +3,7 @@ package com.br.apimercadolivre.searchproducts.ui.fragments
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.br.apimercadolivre.R
+import com.br.apimercadolivre.general.models.BridgeViewViewModelState
 import com.br.apimercadolivre.searchproducts.models.models.Product
+import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.models.models.SellerProduct
 import com.br.apimercadolivre.searchproducts.ui.action.ChannelFragmentActivity
 import com.br.apimercadolivre.searchproducts.ui.list.action.BinderAdapterProductViewHolder
@@ -55,6 +58,19 @@ class SearchFragment private constructor() : Fragment(), InteractiveItemViewHold
                     ?: throw Exception("Llsta de produtos nula")
         }
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+
+        viewModel.state.observe(this) { state ->
+
+            when (state) {
+                is BridgeViewViewModelState.OnSuccess<*> -> {
+                    val data = state.value as ResultSearchProduct
+                    adapterRecyclerView.updateCollection(data.products.toMutableList())
+                }
+                is BridgeViewViewModelState.OnError -> {
+                    // DO
+                }
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -101,41 +117,6 @@ class SearchFragment private constructor() : Fragment(), InteractiveItemViewHold
                 return false
             }
         })
-    }
-
-    private fun fn() {
-
-        val products = mutableListOf<Product>()
-        arrayOf(
-            Product(
-                "A",
-                SellerProduct("1", "0xff"),
-                1000,
-                1,
-                "https://http2.mlstatic.com/storage/developers-site-cms-admin/322395477947-logo--large-plus-v2.png"
-            ),
-            Product(
-                "B",
-                SellerProduct("3", "0xf2"),
-                1000,
-                10,
-                "https://http2.mlstatic.com/storage/developers-site-cms-admin/322395477947-logo--large-plus-v2.png"
-            ),
-            Product(
-                "Baskjdhaskjdhaksjdhaksjhdaskjhd",
-                SellerProduct("30", "0xf2"),
-                1000000000,
-                999999999,
-                "https://http2.mlstatic.com/storage/developers-site-cms-admin/322395477947-logo--large-plus-v2.png"
-            )
-        ).forEach {
-            products.add(it)
-        }
-        var i = 0
-        while (i < (1 shl 20))
-            i++
-
-        adapterRecyclerView.updateCollection(products)
     }
 
     override fun execute(data: Product) {
