@@ -107,6 +107,7 @@ class SearchFragment private constructor() : Fragment(), InteractiveItemViewHold
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     Timber.i(query)
+                    viewModel.searchProductsByName(query)
                 }
                 activity?.closeKeyboard()
                 return true
