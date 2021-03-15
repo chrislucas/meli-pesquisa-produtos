@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+        // manter somente um fragment na pila
+        if (supportFragmentManager.backStackEntryCount > 1)
+            supportFragmentManager.popBackStack()
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commitNow()
@@ -24,5 +28,13 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
 
     override fun loadFragmentWithData(fragment: Fragment) {
         replaceFragment(fragment)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            moveTaskToBack(true)
+            finish()
+        }
     }
 }

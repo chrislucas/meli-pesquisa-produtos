@@ -53,6 +53,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/br/apimercadolivre/searchproducts/ui/ext/PicassoLoadImageUtils.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/br/apimercadolivre/searchproducts/ui/fragments/ProductDetailFragment.kt">
           <value>
             <set />
@@ -113,6 +118,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/br/apimercadolivre/searchproducts/ui/utils/PicassoLoadImageUtils.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/br/apimercadolivre/searchproducts/viewmodels/ActivityExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/br/apimercadolivre/searchproducts/viewmodels/SearchViewModel.kt">
           <value>
             <set />
@@ -164,6 +179,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/themes.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../github/repo-android-2/kotlin/arch/mvvm/SampleMvvmArch/.gitignore">
           <value>
             <set />
           </value>

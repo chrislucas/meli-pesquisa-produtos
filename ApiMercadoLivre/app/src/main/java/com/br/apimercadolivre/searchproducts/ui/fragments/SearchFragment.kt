@@ -18,6 +18,8 @@ import com.br.apimercadolivre.searchproducts.ui.list.action.BinderAdapterProduct
 import com.br.apimercadolivre.searchproducts.ui.list.action.InteractiveItemViewHolder
 import com.br.apimercadolivre.searchproducts.ui.list.adapter.GenericAdapterRecyclerView
 import com.br.apimercadolivre.searchproducts.viewmodels.SearchViewModel
+import com.br.apimercadolivre.searchproducts.viewmodels.closeKeyboard
+import timber.log.Timber
 
 class SearchFragment private constructor() : Fragment(), InteractiveItemViewHolder<Product> {
 
@@ -78,15 +80,27 @@ class SearchFragment private constructor() : Fragment(), InteractiveItemViewHold
     }
 
     private fun initViews(viewRoot: View) {
-        searchView = viewRoot.findViewById(R.id.sv_widget)
         recyclerView = viewRoot.findViewById(R.id.rv_products)
-
         recyclerView.let {
             it.adapter = adapterRecyclerView
             it.layoutManager = LinearLayoutManager(this.requireContext())
         }
+        searchView = viewRoot.findViewById(R.id.sv_widget)
 
-        fn()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    Timber.i(query)
+                }
+                activity?.closeKeyboard()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // DO NOTHING
+                return false
+            }
+        })
     }
 
     private fun fn() {

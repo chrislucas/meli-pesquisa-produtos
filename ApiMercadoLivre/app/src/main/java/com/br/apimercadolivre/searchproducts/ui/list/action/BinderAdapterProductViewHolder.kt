@@ -1,19 +1,15 @@
 package com.br.apimercadolivre.searchproducts.ui.list.action
 
-import android.content.Context
 import android.net.Uri
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.br.apimercadolivre.R
 import com.br.apimercadolivre.searchproducts.models.models.Product
 import com.br.apimercadolivre.searchproducts.ui.list.viewholder.ProductViewHolder
 import com.br.apimercadolivre.searchproducts.ui.list.viewholder.builder.BuilderViewHolder
-import com.squareup.picasso.Callback
+import com.br.apimercadolivre.searchproducts.ui.ext.callbackLoadImagePolicyOffline
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import timber.log.Timber
-import java.lang.Exception
 
 
 class BinderAdapterProductViewHolder(
@@ -26,10 +22,8 @@ class BinderAdapterProductViewHolder(
         when (viewHolder) {
             is ProductViewHolder -> {
                 if (data.isNotEmpty()) {
-                    val position =
-                        if (viewHolder.adapterPosition < 0) 0 else viewHolder.adapterPosition
                     viewHolder.itemView.setOnClickListener {
-                        interactiveItemViewHolder.execute(data[position])
+                        interactiveItemViewHolder.execute(data[viewHolder.adapterPosition])
                     }
                 }
             }
@@ -64,7 +58,14 @@ class BinderAdapterProductViewHolder(
                     imageLoader.load(uri)
                         .networkPolicy(NetworkPolicy.OFFLINE)
                         .error(R.drawable.question)
-                        .into(ivProductImage, callbackLoadImage(uri, ivProductImage))
+                        .into(
+                            ivProductImage,
+                            imageLoader.callbackLoadImagePolicyOffline(
+                                R.drawable.question,
+                                uri,
+                                ivProductImage
+                            )
+                        )
                 }
             }
             else -> {
@@ -72,32 +73,6 @@ class BinderAdapterProductViewHolder(
             }
         }
     }
-
-    private fun callbackLoadImage(uri: Uri, view: ImageView): Callback {
-        return object : Callback {
-            override fun onSuccess() {
-                // DO NOTHING
-            }
-
-            override fun onError(e: Exception?) {
-                imageLoader.load(uri)
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .error(R.drawable.question)
-                    .into(view, callbackLoadImage())
-            }
-        }
-    }
-
-    private fun callbackLoadImage() =
-        object : Callback {
-            override fun onSuccess() {
-                Timber.i("IMG_LOADER_SUCCESSED")
-            }
-
-            override fun onError(e: Exception?) {
-                Timber.e("IMG_LOADER_FAILED")
-            }
-        }
 
 
     override fun getViewHolder(viewType: Int, viewRoot: ViewGroup): RecyclerView.ViewHolder =
