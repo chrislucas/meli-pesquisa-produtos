@@ -72,7 +72,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // mockk
-    implementation "io.mockk:mockk-android:1.9.2.kotlin12"
+    implementation "io.mockk:mockk-android:${versions.mockk}"
     implementation "io.mockk:mockk:${versions.mockk}"
 
     testImplementation 'junit:junit:4.13.2'

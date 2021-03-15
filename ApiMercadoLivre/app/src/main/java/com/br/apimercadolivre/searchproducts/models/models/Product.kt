@@ -8,10 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Product(
     @SerializedName("title") val name: String,
     @SerializedName("seller") val seller: SellerProduct,
-    @SerializedName("price") private val mPrice: Int,
+    @SerializedName("price") val price: Double,
     @SerializedName("available_quantity") private val availableQuantity: Int,
     @SerializedName("thumbnail")  val urlThumbnail: String
-) : Parcelable {
-    val price: Double
-        get() = mPrice * 1.0
-}
+) : Parcelable
