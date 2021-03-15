@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/cv_root_item_product_list"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DefaultStyle_CardView_LayoutResultSearch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/img_view_img_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            tools:src="@drawable/question"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_label_product_name"
+            style="@style/DefaultStyle_TextView_Small_Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginStart="4sp"
+            android:text="@string/txt_label_product_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_view_img_product"
+            app:layout_constraintTop_toTopOf="@+id/img_view_img_product"
+            tools:text="Nome: Samsung Galaxy s21" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_label_product_price"
+            style="@style/DefaultStyle_TextView_Small_Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginStart="4sp"
+            android:text="@string/txt_label_product_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_view_img_product"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_product_name"
+            tools:text="Preço: R$ 20,00" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
