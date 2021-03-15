@@ -22,7 +22,6 @@ fun Picasso.callbackLoadImagePolicyOffline(
 
         override fun onError(e: Exception?) {
             ref.load(uri)
-                .networkPolicy(NetworkPolicy.OFFLINE)
                 .error(errorResId)
                 .into(view, simpleLogCallbackLoadImage())
         }
