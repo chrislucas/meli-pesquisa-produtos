@@ -16,22 +16,22 @@ import timber.log.Timber
 import java.lang.Exception
 
 
-interface ActionOnCLick<T> {
-    fun execute(data: T)
-}
-
 class BinderAdapterProductViewHolder(
-    private val actionOnCLick: ActionOnCLick<Product>, private val context: Context
+    private val interactiveItemViewHolder: InteractiveItemViewHolder<Product>,
 ) : BinderAdapterToViewHolder<Product> {
 
     private var imageLoader: Picasso = Picasso.get()
 
-    var getTyoeDefault = true
-
     override fun onClick(viewHolder: RecyclerView.ViewHolder, data: List<Product>) {
         when (viewHolder) {
             is ProductViewHolder -> {
-                actionOnCLick.execute(data[viewHolder.adapterPosition])
+                if (data.isNotEmpty()) {
+                    val position =
+                        if (viewHolder.adapterPosition < 0) 0 else viewHolder.adapterPosition
+                    viewHolder.itemView.setOnClickListener {
+                        interactiveItemViewHolder.execute(data[position])
+                    }
+                }
             }
             else -> {
                 // do nothing
@@ -40,21 +40,25 @@ class BinderAdapterProductViewHolder(
     }
 
     override fun getItemViewType(data: Product?): Int {
-        return if (getTyoeDefault || data == null) {
-            BuilderViewHolder.VIEW_HOLDER_EMPTY_STATE
-        } else {
-            BuilderViewHolder.VIEW_HOLDER_PRODUCT_LIST
-        }
+        return data?.let { BuilderViewHolder.VIEW_HOLDER_PRODUCT_LIST }
+            ?: BuilderViewHolder.VIEW_HOLDER_EMPTY_STATE
     }
 
     override fun fillFieldsInViewHolder(viewHolder: RecyclerView.ViewHolder, product: Product) {
         when (viewHolder) {
             is ProductViewHolder -> {
                 viewHolder.apply {
+
                     this.tvProductName.text =
-                        context.resources.getString(R.string.txt_label_product_name, product.name)
+                        this.itemView.context.resources.getString(
+                            R.string.txt_label_product_name,
+                            product.name
+                        )
                     this.tvProductPrice.text =
-                        context.resources.getString(R.string.txt_label_product_price, product.price)
+                        this.itemView.context.resources.getString(
+                            R.string.txt_label_product_price,
+                            product.price
+                        )
 
                     val uri = Uri.parse(product.urlThumbnail)
                     imageLoader.load(uri)
@@ -62,6 +66,9 @@ class BinderAdapterProductViewHolder(
                         .error(R.drawable.question)
                         .into(ivProductImage, callbackLoadImage(uri, ivProductImage))
                 }
+            }
+            else -> {
+                // DO NOTHING
             }
         }
     }

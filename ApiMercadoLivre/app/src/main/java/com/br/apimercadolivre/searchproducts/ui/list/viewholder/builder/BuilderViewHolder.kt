@@ -30,8 +30,7 @@ object BuilderViewHolder {
         viewGroup: ViewGroup,
         defaultBuilder: (() -> RecyclerView.ViewHolder)? = null
     ): RecyclerView.ViewHolder {
-
-        return when(viewType) {
+        return when (viewType) {
             VIEW_HOLDER_EMPTY_STATE -> {
                 EmptyStateViewHolder(getView(viewGroup, R.layout.layout_empty_state))
             }
@@ -41,10 +40,13 @@ object BuilderViewHolder {
             else -> {
                 defaultBuilder?.run {
                     this()
-                } ?: throw IllegalArgumentException("")
+                }
+                    ?: throw IllegalArgumentException(
+                        "Nenhum ViewType foi identificado e a funcao" +
+                                " de construir ViewHolder nao foi definida"
+                    )
             }
         }
-
     }
 
     private fun getView(viewGroup: ViewGroup, @LayoutRes layout: Int): View =

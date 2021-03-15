@@ -16,10 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="4sp"
         android:layout_marginTop="4sp"
-        tools:src="@drawable/ic_launcher_background"
+        tools:src="@drawable/question"
         />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_product_name_detail"
         style="@style/DefaultStyle_TextView_Small_Normal"
         android:layout_width="0dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_view_img_product_detail"
         tools:text="Nome: Samsung Galaxy s21" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_product_price_detail"
         style="@style/DefaultStyle_TextView_Small_Normal"
         android:layout_width="0dp"

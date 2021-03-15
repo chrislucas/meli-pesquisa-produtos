@@ -22,10 +22,10 @@
 
             android:layout_marginBottom="4sp"
             android:layout_marginTop="4sp"
-            tools:src="@drawable/ic_launcher_background"
+            tools:src="@drawable/question"
             />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_label_product_name"
             style="@style/DefaultStyle_TextView_Small_Normal"
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
             tools:text="Nome: Samsung Galaxy s21" />
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_label_product_price"
             style="@style/DefaultStyle_TextView_Small_Normal"
             android:layout_width="0dp"
