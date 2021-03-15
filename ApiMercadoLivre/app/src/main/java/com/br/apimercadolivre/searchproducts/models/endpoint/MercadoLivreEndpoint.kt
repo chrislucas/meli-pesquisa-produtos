@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface MercadoLivreEndpoint {
 
     @GET("search")
-    fun searchProductsByName(@Query("q") productName: String): Response<ResultSearchProduct>
+    suspend fun searchProductsByName(@Query("q") productName: String): Response<ResultSearchProduct>
 }

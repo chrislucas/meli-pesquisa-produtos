@@ -24,7 +24,7 @@ import com.br.apimercadolivre.searchproducts.viewmodels.SearchViewModel
 import com.br.apimercadolivre.searchproducts.viewmodels.closeKeyboard
 import timber.log.Timber
 
-class SearchFragment private constructor() : Fragment(), InteractiveItemViewHolder<Product> {
+class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
 
     companion object {
         fun newInstance() = SearchFragment()
@@ -60,7 +60,6 @@ class SearchFragment private constructor() : Fragment(), InteractiveItemViewHold
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
         viewModel.state.observe(this) { state ->
-
             when (state) {
                 is BridgeViewViewModelState.OnSuccess<*> -> {
                     val data = state.value as ResultSearchProduct

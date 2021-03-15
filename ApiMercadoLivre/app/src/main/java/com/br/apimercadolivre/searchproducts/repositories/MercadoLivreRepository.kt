@@ -10,7 +10,7 @@ class MercadoLivreRepository(private val meliSite: MeliSite) {
     }
 
     private val api = getApiEndpoint(
-        String.format("%s/%s", BASE_URL_MELI_ENDPOINT, meliSite.site),
+        String.format("%s/%s/", BASE_URL_MELI_ENDPOINT, meliSite.site),
         MercadoLivreEndpoint::class.java
     )
 
