@@ -57,11 +57,11 @@ class ProductDetailFragment : Fragment() {
             val uri = Uri.parse(this.urlThumbnail)
             pic.load(uri)
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .error(R.drawable.question)
+                .error(R.drawable.question_mark_100)
                 .into(
                     imageViewProduct,
                     pic.callbackLoadImagePolicyOffline(
-                        R.drawable.question,
+                        R.drawable.question_mark_100,
                         uri,
                         imageViewProduct
                     )
@@ -83,6 +83,9 @@ class ProductDetailFragment : Fragment() {
                     R.string.txt_label_product_price,
                     this.price
                 )
+
+
+
         }
 
     }

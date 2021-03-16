@@ -1,9 +1,7 @@
 package com.br.apimercadolivre.searchproducts.ui.fragments
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,7 @@ import com.br.apimercadolivre.R
 import com.br.apimercadolivre.general.models.BridgeViewViewModelState
 import com.br.apimercadolivre.searchproducts.models.models.Product
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
-import com.br.apimercadolivre.searchproducts.models.models.SellerProduct
+import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.ui.action.ChannelFragmentActivity
 import com.br.apimercadolivre.searchproducts.ui.ext.onBackPressed
 import com.br.apimercadolivre.searchproducts.ui.list.action.BinderAdapterProductViewHolder
@@ -23,6 +21,8 @@ import com.br.apimercadolivre.searchproducts.ui.list.action.InteractiveItemViewH
 import com.br.apimercadolivre.searchproducts.ui.list.adapter.GenericAdapterRecyclerView
 import com.br.apimercadolivre.searchproducts.viewmodels.SearchViewModel
 import com.br.apimercadolivre.searchproducts.viewmodels.closeKeyboard
+import com.br.apimercadolivre.searchproducts.viewmodels.factory.GenericViewModelFactory
+import com.br.apimercadolivre.searchproducts.viewmodels.provider.ViewModelProviderUtils
 import com.br.apimercadolivre.searchproducts.viewmodels.showDialogErrorMessage
 import timber.log.Timber
 
@@ -60,9 +60,14 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
                 it.getParcelableArrayList(PRODUCTS_BUNDLE_KEY)
                     ?: throw Exception("Llsta de produtos nula")
         }
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
-        viewModel.state.observe(this) { state ->
+        val viewModelFactory = GenericViewModelFactory(MeliSite::class.java, MeliSite.MLA)
+
+        viewModel = ViewModelProviderUtils.get(
+            viewModelStore, viewModelFactory, SearchViewModel::class.java
+        )
+
+        viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is BridgeViewViewModelState.OnSuccess<*> -> {
                     val data = state.value as ResultSearchProduct

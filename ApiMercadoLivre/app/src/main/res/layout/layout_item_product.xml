@@ -19,10 +19,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
-            android:layout_marginBottom="4sp"
-            android:layout_marginTop="4sp"
-            tools:src="@drawable/question"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/question_mark_50"
             />
 
         <com.google.android.material.textview.MaterialTextView

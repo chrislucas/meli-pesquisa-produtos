@@ -11,17 +11,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel(private val mSite: MeliSite) : BaseViewModel() {
+
+    var site: MeliSite = mSite
+        get() = mSite
+        set(value) {
+            field = value
+            repository = ProdutoMercadoLivreRepository(field)
+        }
 
     private val mState = MutableLiveData<BridgeViewViewModelState>()
 
     val state: LiveData<BridgeViewViewModelState> = mState
 
-    private val repository: ProdutoMercadoLivreRepository by lazy {
-        ProdutoMercadoLivreRepository(
-            MeliSite.MLA
-        )
-    }
+    private var repository: ProdutoMercadoLivreRepository = ProdutoMercadoLivreRepository(mSite)
 
     fun searchProductsByName(name: String) = launch(Dispatchers.IO) {
         val result = repository.searchProductsByName(name)

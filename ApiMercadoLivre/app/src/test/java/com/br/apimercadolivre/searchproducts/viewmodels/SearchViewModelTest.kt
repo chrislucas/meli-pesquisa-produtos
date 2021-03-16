@@ -6,7 +6,6 @@ import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoin
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
-import com.br.apimercadolivre.searchproducts.repositories.providerProdutoMercadoLivreRepository
 import com.br.apimercadolivre.utils.*
 import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import io.mockk.*
@@ -14,10 +13,6 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import okhttp3.Dispatcher
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.After
@@ -48,6 +43,7 @@ class SearchViewModelTest {
 
     @MockK
     private lateinit var repository: ProdutoMercadoLivreRepository
+
     @MockK
     private lateinit var viewModel: SearchViewModel
 
@@ -60,7 +56,7 @@ class SearchViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = SearchViewModel()
+        viewModel = SearchViewModel(MeliSite.MLA)
     }
 
 
@@ -73,7 +69,7 @@ class SearchViewModelTest {
 
         coEvery { repository.searchProductsByName(any()) } returns Response.success(result)
 
-       coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
+        coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
 
 
         runBlocking {
