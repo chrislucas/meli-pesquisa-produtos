@@ -17,6 +17,7 @@ import com.br.apimercadolivre.searchproducts.models.models.Product
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.models.models.SellerProduct
 import com.br.apimercadolivre.searchproducts.ui.action.ChannelFragmentActivity
+import com.br.apimercadolivre.searchproducts.ui.ext.onBackPressed
 import com.br.apimercadolivre.searchproducts.ui.list.action.BinderAdapterProductViewHolder
 import com.br.apimercadolivre.searchproducts.ui.list.action.InteractiveItemViewHolder
 import com.br.apimercadolivre.searchproducts.ui.list.adapter.GenericAdapterRecyclerView
@@ -95,6 +96,7 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
     ): View? {
         val view = inflater.inflate(R.layout.search_fragment, container, false)
         initViews(view)
+        view.onBackPressed { true }
         return view
     }
 

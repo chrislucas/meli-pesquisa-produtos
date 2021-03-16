@@ -19,9 +19,6 @@ class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
     suspend fun searchProductsByName(name: String) = api.searchProductsByName(name)
 }
 
-
-fun providerProdutoMercadoLivreRepository(site: MeliSite) = ProdutoMercadoLivreRepository(site)
-
 enum class MeliSite(val site: String) {
     MLA("MLA")
 }

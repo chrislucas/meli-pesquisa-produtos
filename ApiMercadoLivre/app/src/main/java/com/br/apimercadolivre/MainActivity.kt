@@ -11,6 +11,8 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        setSupportActionBar(findViewById(R.id.default_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             replaceFragment(SearchFragment.newInstance())
         }
@@ -23,7 +25,8 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
-            .commitNow()
+            .addToBackStack(fragment::class.java.name)
+            .commit()
     }
 
     override fun loadFragmentWithData(fragment: Fragment) {
