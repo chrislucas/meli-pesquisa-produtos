@@ -6,7 +6,6 @@ import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoin
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
-import com.br.apimercadolivre.searchproducts.repositories.providerProdutoMercadoLivreRepository
 import com.br.apimercadolivre.utils.*
 import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import io.mockk.*
@@ -30,6 +29,7 @@ import org.junit.runners.JUnit4
 import retrofit2.Response
 import java.lang.Exception
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 class SearchViewModelTest {
@@ -37,68 +37,71 @@ class SearchViewModelTest {
     @get:Rule
     val archRule = InstantTaskExecutorRule()
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     val rule = instantLiveDataAndCoroutineRule
-
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    val scope = InstantCoroutineDispatcherRule()
 
 
     @MockK
     private lateinit var repository: ProdutoMercadoLivreRepository
+
     @MockK
     private lateinit var viewModel: SearchViewModel
 
-    private lateinit var result: ResultSearchProduct
-
     @MockK
     private lateinit var endpoint: MercadoLivreEndpoint
+
+    private val result: ResultSearchProduct by lazy {
+        provideGsonInstance().fromJsonToObject("search_product/result_search_product_1_item.json")
+    }
 
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
         viewModel = SearchViewModel()
+        repository = mockk()
+        endpoint = mockk()
+
+        //mockkStatic("com.br.apimercadolivre.general.http.providers.EndpointApiProviderKt")
+
     }
 
 
     @Test
     fun `ao realizar uma requisicao, ela devolvendo uma lista de produtos estado da viewmodel deve sucesso`() {
 
-        result = provideGsonInstance().fromJsonToObject("search_product/result_search_product.json")
-
         val query = "corda de pular"
 
-        coEvery { repository.searchProductsByName(any()) } returns Response.success(result)
+        val success = Response.success(result)
 
-       coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
+        coEvery { repository.searchProductsByName(query) } returns success
 
+        coEvery { endpoint.searchProductsByName(any()) } returns success
 
         runBlocking {
-
             viewModel.searchProductsByName(query)
-            assertEquals(BridgeViewViewModelState.OnSuccess(result), viewModel.state.value)
+            val actual = viewModel.state.value
+            assertTrue { actual is BridgeViewViewModelState.OnSuccess<*> }
         }
     }
 
 
     @Test
     fun `ao realizar uma requisicao a api deve retornar 500 e a viewmodel deve ficar no estado de erro`() {
-        result = provideGsonInstance().fromJsonToObject("search_product/result_search_product.json")
 
-        coEvery {
-            repository.searchProductsByName(any())
-        } returns Response.error(
+        val error: Response<ResultSearchProduct> = Response.error(
             500,
             ResponseBody.create(MediaType.parse("application/json"), "{}")
         )
 
+        coEvery {
+            repository.searchProductsByName(any())
+        } returns error
 
         runBlocking {
             viewModel.searchProductsByName("")
-            assertEquals(BridgeViewViewModelState.OnError(Throwable("{}")), viewModel.state.value)
+            val actual = viewModel.state.value
+            assertTrue { actual is BridgeViewViewModelState.OnError }
         }
     }
 }

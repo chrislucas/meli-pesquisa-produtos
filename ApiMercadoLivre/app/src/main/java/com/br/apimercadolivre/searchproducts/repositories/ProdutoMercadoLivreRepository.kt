@@ -2,6 +2,7 @@ package com.br.apimercadolivre.searchproducts.repositories
 
 import com.br.apimercadolivre.general.http.providers.getApiEndpoint
 import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoint
+import retrofit2.Response
 
 class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
 
@@ -17,11 +18,4 @@ class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
             )
 
     suspend fun searchProductsByName(name: String) = api.searchProductsByName(name)
-}
-
-
-fun providerProdutoMercadoLivreRepository(site: MeliSite) = ProdutoMercadoLivreRepository(site)
-
-enum class MeliSite(val site: String) {
-    MLA("MLA")
 }

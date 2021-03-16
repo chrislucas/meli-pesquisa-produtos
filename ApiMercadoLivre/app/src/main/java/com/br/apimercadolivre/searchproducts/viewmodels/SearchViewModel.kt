@@ -10,6 +10,7 @@ import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRep
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class SearchViewModel : BaseViewModel() {
 
@@ -23,13 +24,14 @@ class SearchViewModel : BaseViewModel() {
         )
     }
 
-    fun searchProductsByName(name: String) = launch(Dispatchers.IO) {
-        val result = repository.searchProductsByName(name)
-        withContext(Dispatchers.Main) {
-            mState.value = if (result.isSuccessful) {
-                BridgeViewViewModelState.OnSuccess(result.body())
-            } else {
-                BridgeViewViewModelState.OnError(Throwable(result.message()))
+    fun searchProductsByName(name: String) = launch {
+        repository.searchProductsByName(name).let { response ->
+            withContext(Dispatchers.Main) {
+                mState.value = if (response.isSuccessful) {
+                    BridgeViewViewModelState.OnSuccess(response.body())
+                } else {
+                    BridgeViewViewModelState.OnError(Throwable(response.message()))
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.mockito.Mockito.spy
 import retrofit2.Response
 import kotlin.test.assertFalse
@@ -26,8 +27,8 @@ import kotlin.test.assertTrue
 class ProdutoMercadoLivreRepositoryTest {
 
 
-    //@get:Rule
-    //val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
+    @get:Rule
+    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
     //@ExperimentalCoroutinesApi
     //@get:Rule
@@ -72,7 +73,8 @@ class ProdutoMercadoLivreRepositoryTest {
 
         val mock = spyk(repository, recordPrivateCalls = true)
 
-        every { mock getProperty "api" } returns rqSuccess //propertyType MercadoLivreEndpoint::class answers { rqSuccess }
+        every { mock getProperty "api" } returns rqSuccess
+        //propertyType MercadoLivreEndpoint::class answers { rqSuccess }
 
         runBlocking {
             val response: Response<ResultSearchProduct> = repository.searchProductsByName("Topper")
