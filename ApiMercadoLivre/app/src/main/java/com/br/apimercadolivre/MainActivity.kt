@@ -2,6 +2,7 @@ package com.br.apimercadolivre
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.br.apimercadolivre.searchproducts.ui.action.ChannelFragmentActivity
 import com.br.apimercadolivre.searchproducts.ui.fragments.SearchFragment
@@ -16,6 +17,21 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
         if (savedInstanceState == null) {
             replaceFragment(SearchFragment.newInstance())
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+            android.R.id.home -> {
+                if (supportFragmentManager.backStackEntryCount > 1)
+                    supportFragmentManager.popBackStack()
+                else {
+                    finish()
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun replaceFragment(fragment: Fragment) {
