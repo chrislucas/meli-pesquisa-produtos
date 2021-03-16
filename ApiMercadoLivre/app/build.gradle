@@ -78,6 +78,9 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:${versions.mockk}"
     implementation "io.mockk:mockk:${versions.mockk}"
 
+    // mockito
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 

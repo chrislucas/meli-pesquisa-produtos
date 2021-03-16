@@ -6,22 +6,19 @@ import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoin
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
+import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import com.br.apimercadolivre.utils.fromJsonToObject
-import com.br.apimercadolivre.utils.instantLiveDataAndCoroutineRule
 import com.br.apimercadolivre.utils.provideGsonInstance
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockkStatic
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.spy
 import retrofit2.Response
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -44,11 +41,11 @@ class ProdutoMercadoLivreRepositoryTest {
 
 
     @MockK
-    lateinit var repositoryRqSuccess: MercadoLivreEndpoint
+    lateinit var rqSuccess: MercadoLivreEndpoint
 
 
     @MockK
-    lateinit var repositoryRqError: MercadoLivreEndpoint
+    lateinit var rqError: MercadoLivreEndpoint
 
 
     @Before
@@ -58,9 +55,9 @@ class ProdutoMercadoLivreRepositoryTest {
         val result: ResultSearchProduct =
             provideGsonInstance().fromJsonToObject("search_product/result_search_product.json")
 
-        coEvery { repositoryRqSuccess.searchProductsByName(any()) } returns Response.success(result)
+        coEvery { rqSuccess.searchProductsByName(any()) } returns Response.success(result)
 
-        coEvery { repositoryRqError.searchProductsByName(any()) } returns Response.error(
+        coEvery { rqError.searchProductsByName(any()) } returns Response.error(
             500,
             ResponseBody.create(MediaType.parse("application/json"), "{}")
         )
@@ -73,8 +70,9 @@ class ProdutoMercadoLivreRepositoryTest {
     fun `ao pesquisar por um produto e a api retornar 200 deve existir uma lista de produtos de tamanhoa maior ou igual a 0`() {
         val repository = ProdutoMercadoLivreRepository(MeliSite.MLA)
 
-        every { getApiEndpoint(any(),
-            MercadoLivreEndpoint::class.java) } returns repositoryRqSuccess
+        val mock = spyk(repository, recordPrivateCalls = true)
+
+        every { mock getProperty "api" } returns rqSuccess //propertyType MercadoLivreEndpoint::class answers { rqSuccess }
 
         runBlocking {
             val response: Response<ResultSearchProduct> = repository.searchProductsByName("Topper")
@@ -88,8 +86,9 @@ class ProdutoMercadoLivreRepositoryTest {
     fun `ao pesquisar por um produto e a api devolver um erro devo receber um valor de erro via responseBody`() {
         val repository = ProdutoMercadoLivreRepository(MeliSite.MLA)
 
-        every { getApiEndpoint(any(),
-            MercadoLivreEndpoint::class.java) } returns repositoryRqError
+        val mock = spyk(repository, recordPrivateCalls = true)
+
+        every { mock getProperty "api" } returns rqError
 
         runBlocking {
             val response: Response<ResultSearchProduct> = repository.searchProductsByName("Topper")

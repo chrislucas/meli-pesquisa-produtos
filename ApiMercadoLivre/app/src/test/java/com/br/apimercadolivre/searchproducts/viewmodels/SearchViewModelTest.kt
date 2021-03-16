@@ -7,10 +7,8 @@ import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
 import com.br.apimercadolivre.searchproducts.repositories.providerProdutoMercadoLivreRepository
-import com.br.apimercadolivre.utils.TestCoroutineRule
-import com.br.apimercadolivre.utils.fromJsonToObject
-import com.br.apimercadolivre.utils.instantLiveDataAndCoroutineRule
-import com.br.apimercadolivre.utils.provideGsonInstance
+import com.br.apimercadolivre.utils.*
+import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
@@ -36,18 +34,16 @@ import kotlin.test.assertEquals
 
 class SearchViewModelTest {
 
-    //@get:Rule
-    //val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
-
-    //@ExperimentalCoroutinesApi
-    //@get:Rule
-    //val testCoroutineRule = TestCoroutineRule()
-
     @get:Rule
     val archRule = InstantTaskExecutorRule()
 
+    @ExperimentalCoroutinesApi
     @get:Rule
     val rule = instantLiveDataAndCoroutineRule
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val scope = InstantCoroutineDispatcherRule()
 
 
     @MockK
@@ -57,14 +53,13 @@ class SearchViewModelTest {
 
     private lateinit var result: ResultSearchProduct
 
+    @MockK
     private lateinit var endpoint: MercadoLivreEndpoint
 
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        repository = mockk(relaxed = true)
-        endpoint = mockk()
         viewModel = SearchViewModel()
     }
 
@@ -78,13 +73,12 @@ class SearchViewModelTest {
 
         coEvery { repository.searchProductsByName(any()) } returns Response.success(result)
 
-        coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
+       coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
 
 
         runBlocking {
 
             viewModel.searchProductsByName(query)
-
             assertEquals(BridgeViewViewModelState.OnSuccess(result), viewModel.state.value)
         }
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 class SearchViewModel : BaseViewModel() {
 
     private val mState = MutableLiveData<BridgeViewViewModelState>()
+
     val state: LiveData<BridgeViewViewModelState> = mState
 
     private val repository: ProdutoMercadoLivreRepository by lazy {
