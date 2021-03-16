@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +48,8 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
     private val binder = BinderAdapterProductViewHolder(this)
     private var products: ArrayList<Product> = arrayListOf()
 
+    private lateinit var spinnerRegiosMercadoLivre: Spinner
+
     init {
         adapterRecyclerView = GenericAdapterRecyclerView(
             products,
@@ -61,7 +65,7 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
                     ?: throw Exception("Llsta de produtos nula")
         }
 
-        val viewModelFactory = GenericViewModelFactory(MeliSite::class.java, MeliSite.MLA)
+        val viewModelFactory = GenericViewModelFactory(MeliSite::class.java, MeliSite.MERCADO_LIVRE_ARG)
 
         viewModel = ViewModelProviderUtils.get(
             viewModelStore, viewModelFactory, SearchViewModel::class.java
@@ -136,6 +140,24 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
                 return false
             }
         })
+
+        spinnerRegiosMercadoLivre = viewRoot.findViewById(R.id.sp_sites)
+
+        spinnerRegiosMercadoLivre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.site = MeliSite.values()[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+               // NPTHING
+            }
+
+        }
     }
 
     override fun execute(data: Product) {

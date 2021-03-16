@@ -20,5 +20,5 @@ class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
 }
 
 enum class MeliSite(val site: String) {
-    MLA("MLA"), MLB("MLB")
+    MERCADO_LIVRE_ARG("MLA"), MERCADO_LIVRE_BRA("MLB")
 }

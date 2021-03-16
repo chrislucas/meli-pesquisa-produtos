@@ -1,7 +1,6 @@
 package com.br.apimercadolivre.searchproducts.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.br.apimercadolivre.general.http.providers.getApiEndpoint
 import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoint
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
@@ -17,7 +16,6 @@ import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.spy
 import retrofit2.Response
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -68,7 +66,7 @@ class ProdutoMercadoLivreRepositoryTest {
 
     @Test
     fun `ao pesquisar por um produto e a api retornar 200 deve existir uma lista de produtos de tamanhoa maior ou igual a 0`() {
-        val repository = ProdutoMercadoLivreRepository(MeliSite.MLA)
+        val repository = ProdutoMercadoLivreRepository(MeliSite.MERCADO_LIVRE_ARG)
 
         val mock = spyk(repository, recordPrivateCalls = true)
 
@@ -84,7 +82,7 @@ class ProdutoMercadoLivreRepositoryTest {
 
     @Test
     fun `ao pesquisar por um produto e a api devolver um erro devo receber um valor de erro via responseBody`() {
-        val repository = ProdutoMercadoLivreRepository(MeliSite.MLA)
+        val repository = ProdutoMercadoLivreRepository(MeliSite.MERCADO_LIVRE_ARG)
 
         val mock = spyk(repository, recordPrivateCalls = true)
 

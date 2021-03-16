@@ -10,4 +10,5 @@
     <string name="text_warning_user_empty_product_list">Desculpe, mas não foi encontrado nenhum produto com o nome pesquisado.</string>
     <string name="text_warning_user_error_after_search_product">Desculpe- nos, ocorreu um erro durante a pesquisa de seu produto. Estamos trabalhando na correção e logo solucionaremos o problema.</string>
     <string name="txt_label_seller_name">Vendedor: %1$</string>
+    <string name="option_default">Selecione</string>
 </resources>

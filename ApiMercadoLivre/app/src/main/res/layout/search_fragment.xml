@@ -15,6 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/DefaultStyle_Spinner"
+        android:entries="@array/sites"
         />
 
 
@@ -26,6 +28,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp_sites"
         app:layout_constraintBottom_toTopOf="@+id/rv_products"
+
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"
         />
 
 

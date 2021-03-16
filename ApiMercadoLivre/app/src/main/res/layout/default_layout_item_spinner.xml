@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start|center_vertical"
+    android:textColor="@android:color/black"
+    android:textSize="25sp"
+    android:paddingStart="4sp"
+    android:paddingEnd="4sp"
+    android:textIsSelectable="false"
+    android:text="@string/option_default"
+    />
