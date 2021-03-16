@@ -1,4 +1,4 @@
-package com.br.apimercadolivre
+package com.br.apimercadolivre.utils
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.rules.RuleChain
