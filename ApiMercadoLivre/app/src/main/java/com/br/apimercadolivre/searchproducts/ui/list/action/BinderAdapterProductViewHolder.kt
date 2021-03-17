@@ -58,13 +58,11 @@ class BinderAdapterProductViewHolder(
                     val uri = Uri.parse(product.urlThumbnail)
                     imageLoader.load(uri)
                         .networkPolicy(NetworkPolicy.OFFLINE)
-                        .centerCrop(Gravity.CENTER)
-                        .resize(50, 50)
-                        .error(R.drawable.question)
+                        .error(R.drawable.question_mark_50)
                         .into(
                             ivProductImage,
                             imageLoader.callbackLoadImagePolicyOffline(
-                                R.drawable.question,
+                                R.drawable.question_mark_50,
                                 uri,
                                 ivProductImage
                             )

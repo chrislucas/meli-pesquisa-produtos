@@ -4,28 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/img_empty_state"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_text_warning_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:src="@drawable/question_mark_100"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_empty_state"
+        tools:text="@string/text_warning_user_sample"
+        android:textSize="25sp"
+        android:textAlignment="center"
         />
 
-    <TextView
-        android:id="@+id/tv_empty_state"
-        style="@style/DefaultStyle_TextView_Normal"
+
+    <Button
+        android:id="@+id/bt_dismiss_dialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_warning_user"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_empty_state"
-        tools:text="@string/default_text_empty_state" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/ok"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
