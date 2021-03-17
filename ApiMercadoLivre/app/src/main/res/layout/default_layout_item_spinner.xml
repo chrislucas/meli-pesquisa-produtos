@@ -8,6 +8,7 @@
     android:textSize="18sp"
     android:paddingStart="4sp"
     android:paddingEnd="4sp"
+    android:background="@drawable/default_ripple_effect_background"
     android:textIsSelectable="false"
     android:text="@string/option_default"
     style="?attr/spinnerDropDownItemStyle"
