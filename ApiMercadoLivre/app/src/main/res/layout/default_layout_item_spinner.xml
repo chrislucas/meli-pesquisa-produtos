@@ -2,12 +2,15 @@
 <com.google.android.material.textview.MaterialTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:gravity="start|center_vertical"
-    android:textColor="@android:color/black"
-    android:textSize="25sp"
+    android:textColor="@color/black"
+    android:textSize="18sp"
     android:paddingStart="4sp"
     android:paddingEnd="4sp"
     android:textIsSelectable="false"
     android:text="@string/option_default"
+    style="?attr/spinnerDropDownItemStyle"
+    android:ellipsize="marquee"
+    android:singleLine="true"
     />

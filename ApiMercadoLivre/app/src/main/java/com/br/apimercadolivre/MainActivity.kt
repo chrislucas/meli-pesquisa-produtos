@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), ChannelFragmentActivity {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 if (supportFragmentManager.backStackEntryCount > 1)
                     supportFragmentManager.popBackStack()

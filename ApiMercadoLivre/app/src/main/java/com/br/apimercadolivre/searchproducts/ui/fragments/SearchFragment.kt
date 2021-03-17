@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,7 +66,8 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
                     ?: throw Exception("Llsta de produtos nula")
         }
 
-        val viewModelFactory = GenericViewModelFactory(MeliSite::class.java, MeliSite.MERCADO_LIVRE_ARG)
+        val viewModelFactory =
+            GenericViewModelFactory(MeliSite::class.java, MeliSite.MERCADO_LIVRE_ARG)
 
         viewModel = ViewModelProviderUtils.get(
             viewModelStore, viewModelFactory, SearchViewModel::class.java
@@ -143,21 +145,30 @@ class SearchFragment : Fragment(), InteractiveItemViewHolder<Product> {
 
         spinnerRegiosMercadoLivre = viewRoot.findViewById(R.id.sp_sites)
 
-        spinnerRegiosMercadoLivre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.site = MeliSite.values()[position]
+        spinnerRegiosMercadoLivre.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.site = MeliSite.values()[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // NPTHING
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-               // NPTHING
-            }
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.sites,
+            R.layout.default_layout_item_spinner
+        )
 
-        }
+        spinnerRegiosMercadoLivre.adapter = adapter
+
     }
 
     override fun execute(data: Product) {
