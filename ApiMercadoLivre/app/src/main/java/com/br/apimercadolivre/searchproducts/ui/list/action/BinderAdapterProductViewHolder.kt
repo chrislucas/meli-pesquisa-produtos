@@ -1,6 +1,7 @@
 package com.br.apimercadolivre.searchproducts.ui.list.action
 
 import android.net.Uri
+import android.view.Gravity
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.br.apimercadolivre.R
@@ -57,11 +58,11 @@ class BinderAdapterProductViewHolder(
                     val uri = Uri.parse(product.urlThumbnail)
                     imageLoader.load(uri)
                         .networkPolicy(NetworkPolicy.OFFLINE)
-                        .error(R.drawable.question)
+                        .error(R.drawable.question_mark_50)
                         .into(
                             ivProductImage,
                             imageLoader.callbackLoadImagePolicyOffline(
-                                R.drawable.question,
+                                R.drawable.question_mark_50,
                                 uri,
                                 ivProductImage
                             )

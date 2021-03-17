@@ -4,5 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_text_empty_state">Desculpe-nos. Ocorreu um erro mas já estamos prontamento atuando na solução.</string>
     <string name="txt_label_product_name">Nome: %1$s</string>
-    <string name="txt_label_product_price">Preço: R$%1$.2f</string>
+    <string name="txt_label_product_price">Preço: $%1$.2f</string>
+    <string name="ok">OK</string>
+    <string name="text_warning_user_sample">Desculpe-nos pelo inconveniment. Já estamos trabalhando para resolver esse problema.</string>
+    <string name="text_warning_user_empty_product_list">Desculpe, mas não foi encontrado nenhum produto com o nome pesquisado.</string>
+    <string name="text_warning_user_error_after_search_product">Desculpe- nos, ocorreu um erro durante a pesquisa de seu produto. Estamos trabalhando na correção e logo solucionaremos o problema.</string>
+    <string name="txt_label_seller_name">Vendedor: %1$</string>
+    <string name="option_default">Selecione</string>
 </resources>

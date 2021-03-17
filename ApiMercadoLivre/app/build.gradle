@@ -45,6 +45,8 @@ dependencies {
 
     // kotlin-coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines_android}"
+    implementation 'androidx.arch.core:core-testing:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlin_coroutine_test}"
 
 
@@ -70,11 +72,18 @@ dependencies {
     implementation 'androidx.test.espresso:espresso-intents:3.3.0'
     implementation 'androidx.test.espresso:espresso-accessibility:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
 
     // mockk
-    implementation "io.mockk:mockk-android:${versions.mockk}"
+    androidTestImplementation "io.mockk:mockk-android:${versions.mockk}"
     implementation "io.mockk:mockk:${versions.mockk}"
+
+    // mockito
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.2.1'
 }
