@@ -18,7 +18,3 @@ class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
 
     suspend fun searchProductsByName(name: String) = api.searchProductsByName(name)
 }
-
-enum class MeliSite(val site: String) {
-    MERCADO_LIVRE_ARG("MLA"), MERCADO_LIVRE_BRA("MLB")
-}

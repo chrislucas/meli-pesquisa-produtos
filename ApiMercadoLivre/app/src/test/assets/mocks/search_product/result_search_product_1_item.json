@@ -1,0 +1,45 @@
+{
+  "site_id": "MLA",
+  "query": "corda de pular",
+  "paging": {
+    "total": 147,
+    "primary_results": 23,
+    "offset": 0,
+    "limit": 50
+  },
+  "results": [
+    {
+      "id": "MLA826524983",
+      "site_id": "MLA",
+      "title": "Patchord Sm Sc/apc Sc/pc 3mm Lszh Jacket 2 Metros Pilar",
+      "seller": {},
+      "price": 350,
+      "prices": {},
+      "sale_price": null,
+      "currency_id": "ARS",
+      "available_quantity": 150,
+      "sold_quantity": 50,
+      "buying_mode": "buy_it_now",
+      "listing_type_id": "gold_special",
+      "stop_time": "2039-11-16T04:00:00.000Z",
+      "condition": "new",
+      "permalink": "https://articulo.mercadolibre.com.ar/MLA-826524983-patchord-sm-scapc-scpc-3mm-lszh-jacket-2-metros-pilar-_JM",
+      "thumbnail": "http://http2.mlstatic.com/D_823166-MLA32952134287_112019-I.jpg",
+      "thumbnail_id": "823166-MLA32952134287_112019",
+      "accepts_mercadopago": true,
+      "installments": {},
+      "address": {},
+      "shipping": {},
+      "seller_address": {},
+      "attributes": [],
+      "original_price": null,
+      "category_id": "MLA4293",
+      "official_store_id": null,
+      "domain_id": "MLA-NETWORK_CABLES",
+      "catalog_product_id": null,
+      "tags": [],
+      "order_backend": 1,
+      "use_thumbnail_id": true
+    }
+  ]
+}

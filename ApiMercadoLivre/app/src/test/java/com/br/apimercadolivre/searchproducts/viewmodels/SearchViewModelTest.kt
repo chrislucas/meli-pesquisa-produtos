@@ -19,6 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 import retrofit2.Response
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 class SearchViewModelTest {
@@ -26,13 +27,8 @@ class SearchViewModelTest {
     @get:Rule
     val archRule = InstantTaskExecutorRule()
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     val rule = instantLiveDataAndCoroutineRule
-
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    val scope = InstantCoroutineDispatcherRule()
 
 
     @MockK
@@ -41,10 +37,12 @@ class SearchViewModelTest {
     @MockK
     private lateinit var viewModel: SearchViewModel
 
-    private lateinit var result: ResultSearchProduct
-
     @MockK
     private lateinit var endpoint: MercadoLivreEndpoint
+
+    private val result: ResultSearchProduct by lazy {
+        provideGsonInstance().fromJsonToObject("search_product/result_search_product_1_item.json")
+    }
 
 
     @Before
@@ -57,38 +55,38 @@ class SearchViewModelTest {
     @Test
     fun `ao realizar uma requisicao, ela devolvendo uma lista de produtos estado da viewmodel deve sucesso`() {
 
-        result = provideGsonInstance().fromJsonToObject("search_product/result_search_product.json")
-
         val query = "corda de pular"
 
-        coEvery { repository.searchProductsByName(any()) } returns Response.success(result)
+        val success = Response.success(result)
 
-        coEvery { endpoint.searchProductsByName(any()) } returns Response.success(result)
+        coEvery { repository.searchProductsByName(query) } returns success
 
+        coEvery { endpoint.searchProductsByName(any()) } returns success
 
         runBlocking {
-
             viewModel.searchProductsByName(query)
-            assertEquals(BridgeViewViewModelState.OnSuccess(result), viewModel.state.value)
+            val actual = viewModel.state.value
+            assertTrue { actual is BridgeViewViewModelState.OnSuccess<*> }
         }
     }
 
 
     @Test
     fun `ao realizar uma requisicao a api deve retornar 500 e a viewmodel deve ficar no estado de erro`() {
-        result = provideGsonInstance().fromJsonToObject("search_product/result_search_product.json")
 
-        coEvery {
-            repository.searchProductsByName(any())
-        } returns Response.error(
+        val error: Response<ResultSearchProduct> = Response.error(
             500,
             ResponseBody.create(MediaType.parse("application/json"), "{}")
         )
 
+        coEvery {
+            repository.searchProductsByName(any())
+        } returns error
 
         runBlocking {
             viewModel.searchProductsByName("")
-            assertEquals(BridgeViewViewModelState.OnError(Throwable("{}")), viewModel.state.value)
+            val actual = viewModel.state.value
+            assertTrue { actual is BridgeViewViewModelState.OnError }
         }
     }
 }
