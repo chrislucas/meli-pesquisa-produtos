@@ -7,8 +7,9 @@
     android:padding="8sp"
     tools:context=".searchproducts.ui.fragments.ProductDetailFragment">
 
-    <ImageView
-        android:id="@+id/img_view_img_product_detail"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_canvas_img_view_img_product_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,8 +17,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="4sp"
         android:layout_marginTop="4sp"
-        tools:src="@drawable/question"
-        />
+        android:cropToPadding="true">
+
+        <ImageView
+            android:id="@+id/img_view_img_product_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/question_mark_100"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_product_name_detail"
@@ -29,7 +41,7 @@
         android:text="@string/txt_label_product_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_view_img_product_detail"
+        app:layout_constraintTop_toBottomOf="@+id/cv_canvas_img_view_img_product_detail"
         tools:text="Nome: Samsung Galaxy s21" />
 
     <com.google.android.material.textview.MaterialTextView

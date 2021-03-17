@@ -2,7 +2,6 @@ package com.br.apimercadolivre.searchproducts.repositories
 
 import com.br.apimercadolivre.general.http.providers.getApiEndpoint
 import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoint
-import retrofit2.Response
 
 class ProdutoMercadoLivreRepository(private val meliSite: MeliSite) {
 

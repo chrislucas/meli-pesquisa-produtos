@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="purple_200">#FFBB86FC</color>
+  <color name="purple_E7D4FF">#E7D4FF</color>
   <color name="purple_500">#FF6200EE</color>
   <color name="purple_700">#FF3700B3</color>
 
   <!-- Tons de amarelo do Mercado Livre -->
   <color name="yellow_fff159">#fff159</color>
-  <color name="yellow_FFF695">#FFF695</color>
+  <color name="yellow_FFFFEA33">#FFEA33</color>
   <color name="yellow_F6C93E">#F6C93E</color>
   <color name="yellow_F1D684">#F1D684</color>
+  <color name="yellow_F8EABE">#F8EABE</color>
+  <color name="yellow_FFF8BA">#FFF8BA</color>
 
   <color name="teal_200">#FF03DAC5</color>
   <color name="teal_700">#FF018786</color>

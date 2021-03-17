@@ -10,24 +10,14 @@ import com.br.apimercadolivre.utils.*
 import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import okhttp3.Dispatcher
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import retrofit2.Response
-import java.lang.Exception
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -58,12 +48,7 @@ class SearchViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = SearchViewModel()
-        repository = mockk()
-        endpoint = mockk()
-
-        //mockkStatic("com.br.apimercadolivre.general.http.providers.EndpointApiProviderKt")
-
+        viewModel = SearchViewModel(MeliSite.MERCADO_LIVRE_ARG)
     }
 
 

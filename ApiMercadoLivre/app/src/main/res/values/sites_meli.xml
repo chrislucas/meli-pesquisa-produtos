@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="sites">
+        <item>Mercado Livre Argentina</item>
+        <item>Mercado Livre Brasil</item>
+    </array>
+</resources>

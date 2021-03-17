@@ -8,15 +8,32 @@
     tools:context=".searchproducts.ui.fragments.SearchFragment">
 
 
+    <Spinner
+        android:id="@+id/sp_sites"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/sites"
+        android:theme="@style/DefaultStyle_Spinner"
+        android:stateListAnimator="@drawable/default_state_animation_config_spinner"
+        android:layout_margin="10sp"
+        android:popupBackground="@drawable/default_ripple_effect_background_with_border"
+        android:background="@drawable/default_bg_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_widget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"
         app:layout_constraintBottom_toTopOf="@+id/rv_products"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_sites" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -26,9 +43,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sv_widget"
-        tools:listitem="@layout/layout_item_product"
         tools:itemCount="10"
-        />
+        tools:listitem="@layout/layout_item_product" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
