@@ -11,8 +11,8 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 
-class InstantCoroutineDispatcherRule(
-    // private val testCoroutineDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+class InstantCoroutineDispatcherRule @ExperimentalCoroutinesApi constructor(
+    private val testCoroutineDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : TestWatcher() {
 
     @ExperimentalCoroutinesApi
@@ -24,11 +24,12 @@ class InstantCoroutineDispatcherRule(
     @ExperimentalCoroutinesApi
     override fun finished(description: Description?) {
         super.finished(description)
-        //Dispatchers.resetMain()
-        //testCoroutineDispatcher.cleanupTestCoroutines()
+        Dispatchers.resetMain()
+        testCoroutineDispatcher.cleanupTestCoroutines()
     }
 
     companion object {
+        @ExperimentalCoroutinesApi
         val instantLiveDataAndCoroutineRule: RuleChain
             get() = RuleChain.outerRule(InstantCoroutineDispatcherRule())
                 .around(InstantTaskExecutorRule())
