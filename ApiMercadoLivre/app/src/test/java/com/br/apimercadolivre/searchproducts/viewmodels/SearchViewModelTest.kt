@@ -1,11 +1,13 @@
 package com.br.apimercadolivre.searchproducts.viewmodels
 
+import android.app.admin.FactoryResetProtectionPolicy
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.br.apimercadolivre.general.models.BridgeViewViewModelState
 import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoint
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
+import com.br.apimercadolivre.searchproducts.repositories.provideMercadoLivreRepository
 import com.br.apimercadolivre.utils.*
 import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
 import io.mockk.*
@@ -34,7 +36,6 @@ class SearchViewModelTest {
     @MockK
     private lateinit var repository: ProdutoMercadoLivreRepository
 
-    @MockK
     private lateinit var viewModel: SearchViewModel
 
     @MockK
@@ -49,6 +50,7 @@ class SearchViewModelTest {
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true)
         viewModel = SearchViewModel(MeliSite.MERCADO_LIVRE_ARG)
+        mockkStatic(::provideMercadoLivreRepository)
     }
 
 
@@ -59,9 +61,11 @@ class SearchViewModelTest {
 
         val success = Response.success(result)
 
+        every { provideMercadoLivreRepository(any()) } returns repository
+
         coEvery { repository.searchProductsByName(query) } returns success
 
-        coEvery { endpoint.searchProductsByName(any()) } returns success
+        //coEvery { endpoint.searchProductsByName(any()) } returns success
 
         runBlocking {
             viewModel.searchProductsByName(query)
@@ -78,6 +82,8 @@ class SearchViewModelTest {
             500,
             ResponseBody.create(MediaType.parse("application/json"), "{}")
         )
+
+        every { provideMercadoLivreRepository(any()) } returns repository
 
         coEvery {
             repository.searchProductsByName(any())
