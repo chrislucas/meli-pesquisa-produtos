@@ -1,3 +1,4 @@
+@file:JvmName("EndpointApiProvider")
 package com.br.apimercadolivre.general.http.providers
 
 import retrofit2.Converter
