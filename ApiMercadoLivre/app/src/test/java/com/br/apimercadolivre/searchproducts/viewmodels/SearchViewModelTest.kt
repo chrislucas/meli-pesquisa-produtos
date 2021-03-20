@@ -1,19 +1,19 @@
 package com.br.apimercadolivre.searchproducts.viewmodels
 
-import android.app.admin.FactoryResetProtectionPolicy
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.br.apimercadolivre.general.models.BridgeViewViewModelState
-import com.br.apimercadolivre.searchproducts.models.endpoint.MercadoLivreEndpoint
 import com.br.apimercadolivre.searchproducts.models.models.ResultSearchProduct
 import com.br.apimercadolivre.searchproducts.repositories.MeliSite
 import com.br.apimercadolivre.searchproducts.repositories.ProdutoMercadoLivreRepository
 import com.br.apimercadolivre.searchproducts.repositories.provideMercadoLivreRepository
-import com.br.apimercadolivre.utils.*
 import com.br.apimercadolivre.utils.InstantCoroutineDispatcherRule.Companion.instantLiveDataAndCoroutineRule
+import com.br.apimercadolivre.utils.fromJsonToObject
+import com.br.apimercadolivre.utils.provideGsonInstance
 import io.mockk.*
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Before
@@ -21,7 +21,6 @@ import org.junit.Rule
 import org.junit.Test
 import retrofit2.Response
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 
 class SearchViewModelTest {
@@ -29,17 +28,10 @@ class SearchViewModelTest {
     @get:Rule
     val archRule = InstantTaskExecutorRule()
 
+    @ExperimentalCoroutinesApi
     @get:Rule
     val rule = instantLiveDataAndCoroutineRule
 
-
-    @MockK
-    private lateinit var repository: ProdutoMercadoLivreRepository
-
-    private lateinit var viewModel: SearchViewModel
-
-    @MockK
-    private lateinit var endpoint: MercadoLivreEndpoint
 
     private val result: ResultSearchProduct by lazy {
         provideGsonInstance().fromJsonToObject("search_product/result_search_product_1_item.json")
@@ -48,51 +40,89 @@ class SearchViewModelTest {
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = SearchViewModel(MeliSite.MERCADO_LIVRE_ARG)
         mockkStatic(::provideMercadoLivreRepository)
     }
 
 
+    @ExperimentalCoroutinesApi
     @Test
-    fun `ao realizar uma requisicao, ela devolvendo uma lista de produtos estado da viewmodel deve sucesso`() {
+    fun `ao realizar uma requisicao, ela devolvendo uma lista de produtos estado da viewmodel deve sucesso`() =
+        runBlockingTest {
+            val (viewModel, dependencies) = provider()
 
-        val query = "corda de pular"
+            val repo: ProdutoMercadoLivreRepository = dependencies.repository
 
-        val success = Response.success(result)
+            val query = "corda de pular"
 
-        every { provideMercadoLivreRepository(any()) } returns repository
+            val success = Response.success(result)
 
-        coEvery { repository.searchProductsByName(query) } returns success
+            val observer = mockk<Observer<BridgeViewViewModelState>>(relaxed = true)
 
-        //coEvery { endpoint.searchProductsByName(any()) } returns success
+            viewModel.state.observeForever(observer)
 
-        runBlocking {
+            every { provideMercadoLivreRepository(any()) } returns repo
+
+            coEvery { repo.searchProductsByName(query) } returns success
+
             viewModel.searchProductsByName(query)
-            val actual = viewModel.state.value
-            assertTrue { actual is BridgeViewViewModelState.OnSuccess<*> }
+
+            coVerify {
+                val response = BridgeViewViewModelState.OnSuccess(result)
+                observer.onChanged(response)
+            }
         }
-    }
 
 
     @Test
     fun `ao realizar uma requisicao a api deve retornar 500 e a viewmodel deve ficar no estado de erro`() {
+
+        val (viewModel, dependencies) = provider()
 
         val error: Response<ResultSearchProduct> = Response.error(
             500,
             ResponseBody.create(MediaType.parse("application/json"), "{}")
         )
 
-        every { provideMercadoLivreRepository(any()) } returns repository
+        val observer = mockk<Observer<BridgeViewViewModelState>>(relaxed = true)
+
+        viewModel.state.observeForever(observer)
+
+        every { provideMercadoLivreRepository(any()) } returns dependencies.repository
 
         coEvery {
-            repository.searchProductsByName(any())
+            dependencies.repository.searchProductsByName(any())
         } returns error
 
         runBlocking {
-            viewModel.searchProductsByName("")
-            val actual = viewModel.state.value
-            assertTrue { actual is BridgeViewViewModelState.OnError }
+            viewModel.searchProductsByName("carro")
+        }
+
+        coEvery {
+            val response = BridgeViewViewModelState.OnError(Throwable("{}"))
+            observer.onChanged(response)
         }
     }
+
+    @Test
+    fun `ao mudar o local de pesquisa de produtos deve-se retornar o site devido`() {
+        val viewModel = SearchViewModel(MeliSite.MERCADO_LIVRE_BRA)
+        viewModel.site = MeliSite.MERCADO_LIVRE_BRA
+
+        assertEquals(MeliSite.MERCADO_LIVRE_BRA, viewModel.site, "Not equals")
+
+    }
 }
+
+
+data class Dependencies(val repository: ProdutoMercadoLivreRepository)
+
+data class MockDataViewModel(
+    val viewModel: SearchViewModel = SearchViewModel(MeliSite.MERCADO_LIVRE_ARG),
+    val dependencies: Dependencies
+)
+
+
+fun provider() = MockDataViewModel(
+    SearchViewModel(MeliSite.MERCADO_LIVRE_BRA),
+    Dependencies(mockk(relaxed = true))
+)
